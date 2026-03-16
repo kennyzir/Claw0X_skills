@@ -299,9 +299,8 @@ Built something useful? List it on the [Claw0x marketplace](https://claw0x.com) 
 **Pricing models available:**
 - Free tier + paid overage (freemium)
 - Pay-per-call
-- Flat monthly subscription
 
-> 💡 Skills on Claw0x get automatic discovery, SEO, and distribution to thousands of AI agent developers.
+> 💡 Skills listed on Claw0x get automatic discovery, SEO optimization, and exposure to thousands of AI agent developers — zero marketing effort on your end.
 
 ## Contributing
 
