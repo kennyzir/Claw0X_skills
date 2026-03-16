@@ -1,107 +1,120 @@
-# 000xxx_skills - Claw0x Platform Skills
+<p align="center">
+  <img src="https://img.shields.io/badge/Claw0x-Skills-blue?style=for-the-badge" alt="Claw0x Skills" />
+  <img src="https://img.shields.io/badge/TypeScript-Ready-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Vercel-Deploy-000?style=for-the-badge&logo=vercel" alt="Vercel" />
+  <img src="https://img.shields.io/github/license/kennyzir/000xxx_skills?style=for-the-badge" alt="License" />
+</p>
 
-6 production-ready API skills for the Claw0x marketplace.
+<h1 align="center">Claw0x Skills</h1>
 
-## 🚀 Skills
+<p align="center">
+  Open-source AI skill microservices. Build once, sell everywhere through the <a href="https://claw0x.com">Claw0x API Gateway</a>.
+</p>
 
-1. **Web Scraper Pro** (`/api/scrape`) - Extract structured data from websites
-2. **Email Validator** (`/api/validate-email`) - Validate email addresses
-3. **Image Generator** (`/api/generate-image`) - Generate images from text
-4. **Sentiment Analyzer** (`/api/sentiment`) - Analyze text sentiment
-5. **PDF Parser** (`/api/parse-pdf`) - Extract text from PDFs
-6. **Translation API** (`/api/translate`) - Translate text between languages
+<p align="center">
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#available-skills">Skills</a> •
+  <a href="#build-your-own">Build Your Own</a> •
+  <a href="#sell-on-claw0x">Sell on Claw0x</a> •
+  <a href="CONTRIBUTING.md">Contributing</a>
+</p>
 
-## 📦 Installation
+---
+
+## What is this?
+
+This repo contains production-ready **AI skill APIs** — small, focused microservices that do one thing well. Each skill is a single TypeScript file deployed as a serverless function.
+
+**Use them for free**, fork them, or build your own and **sell them on the [Claw0x marketplace](https://claw0x.com)** to earn revenue from every API call.
+
+## Available Skills
+
+| Skill | Endpoint | Description | Status |
+|-------|----------|-------------|--------|
+| 🔍 Web Scraper | `/api/scrape` | Extract structured data (title, headings, links, images) from any URL | ✅ Production |
+| 📧 Email Validator | `/api/validate-email` | Validate email format, domain, and risk scoring | ✅ Production |
+| 💬 Sentiment Analyzer | `/api/sentiment` | Analyze text sentiment with confidence scoring | ✅ Production |
+| 📄 PDF Parser | `/api/parse-pdf` | Extract text and metadata from PDF documents | ✅ Production |
+| 🌐 Translation | `/api/translate` | Translate text between 6+ languages | 🔧 Demo |
+| 🎨 Image Generator | `/api/generate-image` | Generate images from text prompts | 🔧 Placeholder |
+
+## Quick Start
 
 ```bash
+# Clone
+git clone https://github.com/kennyzir/000xxx_skills.git
+cd 000xxx_skills
+
+# Install
 npm install
-```
 
-## 🔧 Configuration
-
-1. Copy environment variables:
-```bash
+# Configure
 cp .env.example .env
-```
+# Edit .env → set SKILL_AUTH_TOKEN
 
-2. Edit `.env` and set your auth token:
-```
-SKILL_AUTH_TOKEN=claw0x_bridge_2026
-```
-
-## 🏃 Running Locally
-
-```bash
+# Run locally
 npm run dev
 ```
 
-Server will start at `http://localhost:3000`
-
-## 🧪 Testing
-
-Test a skill locally:
+Test it:
 
 ```bash
 curl -X POST http://localhost:3000/api/sentiment \
-  -H "Authorization: Bearer claw0x_bridge_2026" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"text": "I love this product!"}'
+  -d '{"text": "This project is amazing!"}'
 ```
 
-## 🚀 Deployment
+Response:
 
-### Deploy to Vercel
-
-1. Install Vercel CLI:
-```bash
-npm install -g vercel
+```json
+{
+  "success": true,
+  "data": {
+    "sentiment": "very positive",
+    "score": 4,
+    "confidence": 40,
+    "positive_words": ["amazing"],
+    "negative_words": []
+  }
+}
 ```
 
-2. Login:
+## Deploy in 60 Seconds
+
 ```bash
+npm i -g vercel
 vercel login
-```
-
-3. Deploy:
-```bash
 vercel deploy --prod
 ```
 
-4. Set environment variables in Vercel Dashboard:
-   - `SKILL_AUTH_TOKEN` = `claw0x_bridge_2026`
+Set `SKILL_AUTH_TOKEN` in Vercel Dashboard → Settings → Environment Variables. Done.
 
-### Update Database
+## API Reference
 
-After deployment, update the Claw0x database with your new URLs:
+Every skill follows the same pattern:
 
-```sql
-UPDATE skills 
-SET endpoint_url = 'https://your-vercel-url.vercel.app/api/' || 
-  CASE 
-    WHEN slug = 'web-scraper-pro' THEN 'scrape'
-    WHEN slug = 'email-validator' THEN 'validate-email'
-    WHEN slug = 'image-generator' THEN 'generate-image'
-    WHEN slug = 'sentiment-analyzer' THEN 'sentiment'
-    WHEN slug = 'pdf-parser' THEN 'parse-pdf'
-    WHEN slug = 'translation-api' THEN 'translate'
-  END
-WHERE seller_id = (
-  SELECT id FROM users 
-  WHERE wallet_address = '0x1234567890123456789012345678901234567890'
-);
+```
+POST /api/{skill-name}
+Authorization: Bearer YOUR_TOKEN
+Content-Type: application/json
 ```
 
-## 📖 API Documentation
+All responses use a consistent format:
 
-### 1. Web Scraper Pro
+```json
+{
+  "success": true,
+  "data": { ... }
+}
+```
 
-**Endpoint:** `/api/scrape`
+<details>
+<summary><strong>🔍 Web Scraper</strong> — <code>POST /api/scrape</code></summary>
 
 **Input:**
 ```json
-{
-  "url": "https://example.com"
-}
+{ "url": "https://example.com" }
 ```
 
 **Output:**
@@ -109,25 +122,23 @@ WHERE seller_id = (
 {
   "success": true,
   "data": {
-    "title": "Page Title",
-    "description": "Meta description",
-    "headings": { "h1": [...], "h2": [...] },
-    "links": [...],
-    "images": [...],
-    "paragraphs": [...]
+    "title": "Example Domain",
+    "description": "...",
+    "headings": { "h1": ["Example Domain"], "h2": [] },
+    "links": [{ "text": "More information...", "href": "https://..." }],
+    "images": [],
+    "paragraphs": ["This domain is for use in illustrative examples..."]
   }
 }
 ```
+</details>
 
-### 2. Email Validator
-
-**Endpoint:** `/api/validate-email`
+<details>
+<summary><strong>📧 Email Validator</strong> — <code>POST /api/validate-email</code></summary>
 
 **Input:**
 ```json
-{
-  "email": "user@example.com"
-}
+{ "email": "user@example.com" }
 ```
 
 **Output:**
@@ -137,44 +148,19 @@ WHERE seller_id = (
   "data": {
     "valid": true,
     "email": "user@example.com",
-    "checks": {...},
+    "checks": { "format_valid": true, "domain": "example.com" },
     "risk_score": 10
   }
 }
 ```
+</details>
 
-### 3. Image Generator
-
-**Endpoint:** `/api/generate-image`
-
-**Input:**
-```json
-{
-  "prompt": "A beautiful sunset over mountains"
-}
-```
-
-**Output:**
-```json
-{
-  "success": true,
-  "data": {
-    "image_url": "https://...",
-    "prompt": "...",
-    "size": "512x512"
-  }
-}
-```
-
-### 4. Sentiment Analyzer
-
-**Endpoint:** `/api/sentiment`
+<details>
+<summary><strong>💬 Sentiment Analyzer</strong> — <code>POST /api/sentiment</code></summary>
 
 **Input:**
 ```json
-{
-  "text": "I love this product!"
-}
+{ "text": "I love this product!" }
 ```
 
 **Output:**
@@ -184,22 +170,20 @@ WHERE seller_id = (
   "data": {
     "sentiment": "positive",
     "score": 3,
-    "confidence": 85,
+    "confidence": 30,
     "positive_words": ["love"],
     "negative_words": []
   }
 }
 ```
+</details>
 
-### 5. PDF Parser
-
-**Endpoint:** `/api/parse-pdf`
+<details>
+<summary><strong>📄 PDF Parser</strong> — <code>POST /api/parse-pdf</code></summary>
 
 **Input:**
 ```json
-{
-  "pdf_url": "https://example.com/document.pdf"
-}
+{ "pdf_url": "https://example.com/doc.pdf" }
 ```
 
 **Output:**
@@ -207,24 +191,21 @@ WHERE seller_id = (
 {
   "success": true,
   "data": {
-    "text": "Full PDF text...",
-    "pages": 10,
-    "word_count": 5000,
-    "preview": "First 500 chars..."
+    "text": "Full extracted text...",
+    "pages": 5,
+    "word_count": 2500,
+    "preview": "First 500 characters..."
   }
 }
 ```
+</details>
 
-### 6. Translation API
-
-**Endpoint:** `/api/translate`
+<details>
+<summary><strong>🌐 Translation</strong> — <code>POST /api/translate</code></summary>
 
 **Input:**
 ```json
-{
-  "text": "hello",
-  "target_lang": "es"
-}
+{ "text": "hello", "target_lang": "zh" }
 ```
 
 **Output:**
@@ -232,82 +213,112 @@ WHERE seller_id = (
 {
   "success": true,
   "data": {
-    "translated_text": "hola",
+    "translated_text": "你好",
     "source_lang": "en",
-    "target_lang": "es",
+    "target_lang": "zh",
     "confidence": 0.95
   }
 }
 ```
 
-## 🔐 Authentication
+Supported languages: `es`, `fr`, `de`, `zh`, `ja`, `ko`
+</details>
 
-All endpoints require Bearer token authentication:
+## Build Your Own Skill
 
+Creating a new skill takes about 5 minutes. Every skill is a single file in the `api/` directory.
+
+```typescript
+// api/my-skill.ts
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import { authMiddleware } from '../lib/auth';
+import { validateInput } from '../lib/validation';
+import { successResponse, errorResponse } from '../lib/response';
+
+async function handler(req: VercelRequest, res: VercelResponse) {
+  const validation = validateInput(req.body, {
+    text: { type: 'string', required: true, min: 1, max: 5000 }
+  });
+
+  if (!validation.valid) {
+    return errorResponse(res, 'Invalid input', 400, validation.errors);
+  }
+
+  const { text } = validation.data!;
+
+  // Your logic here
+  const result = { processed: true, length: text.length };
+
+  return successResponse(res, result);
+}
+
+export default authMiddleware(handler);
 ```
-Authorization: Bearer claw0x_bridge_2026
-```
 
-## 🛠️ Development
+Deploy → your skill is live at `/api/my-skill`.
 
 ### Project Structure
 
 ```
 000xxx_skills/
-├── api/                    # Skill endpoints
-│   ├── scrape.ts
-│   ├── validate-email.ts
-│   ├── generate-image.ts
-│   ├── sentiment.ts
-│   ├── parse-pdf.ts
-│   └── translate.ts
-├── lib/                    # Shared utilities
-│   ├── auth.ts            # Authentication
-│   ├── validation.ts      # Input validation
-│   └── response.ts        # Response formatting
-├── vercel.json            # Vercel configuration
+├── api/                    # Each file = one skill endpoint
+│   ├── scrape.ts           # Web scraper
+│   ├── validate-email.ts   # Email validation
+│   ├── sentiment.ts        # Sentiment analysis
+│   ├── parse-pdf.ts        # PDF text extraction
+│   ├── translate.ts        # Translation
+│   └── generate-image.ts   # Image generation
+├── lib/                    # Shared utilities (use these!)
+│   ├── auth.ts             # Bearer token auth middleware
+│   ├── validation.ts       # Input schema validation
+│   └── response.ts         # Consistent JSON responses
+├── vercel.json             # Vercel config
 ├── package.json
 └── tsconfig.json
 ```
 
-### Adding a New Skill
+### Built-in Utilities
 
-1. Create new file in `api/` directory
-2. Import auth middleware and utilities
-3. Implement handler function
-4. Export with `authMiddleware(handler)`
-5. Update database with new endpoint
+The `lib/` directory gives you three things for free:
 
-## 📊 Monitoring
+- **`authMiddleware(handler)`** — Wraps your handler with Bearer token auth + CORS + POST-only enforcement
+- **`validateInput(body, schema)`** — Validates request body against a typed schema with min/max/pattern rules
+- **`successResponse(res, data)` / `errorResponse(res, msg, code)`** — Consistent JSON response format
 
-Monitor your skills in Vercel Dashboard:
-- Response times
-- Error rates
-- Request volume
-- Logs
+## Sell on Claw0x
 
-## 🐛 Troubleshooting
+Built something useful? List it on the [Claw0x marketplace](https://claw0x.com) and earn revenue from every API call.
 
-### "Unauthorized" error
-- Check `SKILL_AUTH_TOKEN` environment variable
-- Verify Authorization header format
+**How it works:**
 
-### Timeout errors
-- Increase timeout in axios config
-- Optimize skill logic
-- Consider caching
+1. Build your skill (fork this repo or start fresh)
+2. Deploy it anywhere (Vercel, AWS, your own server)
+3. Submit it to [Claw0x](https://claw0x.com) — we handle billing, API keys, rate limiting, and distribution
+4. Earn per-call revenue when developers use your skill through our gateway
 
-### High memory usage
-- Limit response sizes
-- Stream large files
-- Use pagination
+**Pricing models available:**
+- Free tier + paid overage (freemium)
+- Pay-per-call
+- Flat monthly subscription
 
-## 📝 License
+> 💡 Skills on Claw0x get automatic discovery, SEO, and distribution to thousands of AI agent developers.
 
-MIT
+## Contributing
 
-## 🤝 Support
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-For issues or questions:
-- GitHub Issues: https://github.com/kennyzir/000xxx_skills
-- Email: support@claw0x.com
+**Ideas for contributions:**
+- 🆕 New skills (OCR, code formatting, markdown conversion, etc.)
+- 🔧 Improve existing skills (better error handling, caching, etc.)
+- 📖 Documentation improvements
+- 🧪 Tests
+
+## Community
+
+- 🌐 [Claw0x Platform](https://claw0x.com)
+- 🐛 [Report Issues](https://github.com/kennyzir/000xxx_skills/issues)
+- 💬 [Discussions](https://github.com/kennyzir/000xxx_skills/discussions)
+
+## License
+
+MIT — use it however you want. See [LICENSE](LICENSE).

@@ -1,58 +1,33 @@
 #!/bin/bash
 
-# Test script for local development
+# Test all skills locally
 # Usage: ./test-local.sh
+# Make sure to run `npm run dev` first and set SKILL_AUTH_TOKEN in .env
 
-BASE_URL="http://localhost:3000"
-AUTH_TOKEN="claw0x_bridge_2026"
+BASE_URL="${BASE_URL:-http://localhost:3000}"
+AUTH_TOKEN="${SKILL_AUTH_TOKEN:-your_secret_token_here}"
 
-echo "🧪 Testing Claw0x Skills Locally"
-echo "================================"
+echo "🧪 Testing Claw0x Skills"
+echo "========================"
 echo ""
 
-# Test 1: Sentiment Analyzer
-echo "1️⃣ Testing Sentiment Analyzer..."
-curl -X POST "$BASE_URL/api/sentiment" \
-  -H "Authorization: Bearer $AUTH_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"text": "I love this amazing product!"}' \
-  -s | jq '.'
-echo ""
+test_skill() {
+  local name=$1
+  local endpoint=$2
+  local payload=$3
+  echo "→ $name ($endpoint)"
+  curl -s -X POST "$BASE_URL$endpoint" \
+    -H "Authorization: Bearer $AUTH_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d "$payload" | jq '.' 2>/dev/null || echo "(install jq for pretty output)"
+  echo ""
+}
 
-# Test 2: Email Validator
-echo "2️⃣ Testing Email Validator..."
-curl -X POST "$BASE_URL/api/validate-email" \
-  -H "Authorization: Bearer $AUTH_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"email": "test@example.com"}' \
-  -s | jq '.'
-echo ""
+test_skill "Sentiment Analyzer" "/api/sentiment" '{"text": "I love this product!"}'
+test_skill "Email Validator" "/api/validate-email" '{"email": "test@example.com"}'
+test_skill "Web Scraper" "/api/scrape" '{"url": "https://example.com"}'
+test_skill "Translation" "/api/translate" '{"text": "hello", "target_lang": "es"}'
+test_skill "Image Generator" "/api/generate-image" '{"prompt": "A sunset over mountains"}'
+test_skill "PDF Parser" "/api/parse-pdf" '{"pdf_url": "https://example.com/test.pdf"}'
 
-# Test 3: Web Scraper
-echo "3️⃣ Testing Web Scraper..."
-curl -X POST "$BASE_URL/api/scrape" \
-  -H "Authorization: Bearer $AUTH_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://example.com"}' \
-  -s | jq '.'
-echo ""
-
-# Test 4: Translation API
-echo "4️⃣ Testing Translation API..."
-curl -X POST "$BASE_URL/api/translate" \
-  -H "Authorization: Bearer $AUTH_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"text": "hello", "target_lang": "es"}' \
-  -s | jq '.'
-echo ""
-
-# Test 5: Image Generator
-echo "5️⃣ Testing Image Generator..."
-curl -X POST "$BASE_URL/api/generate-image" \
-  -H "Authorization: Bearer $AUTH_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"prompt": "A beautiful sunset"}' \
-  -s | jq '.'
-echo ""
-
-echo "✅ All tests completed!"
+echo "✅ Done"

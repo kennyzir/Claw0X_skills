@@ -8,7 +8,11 @@ export function authenticate(req: VercelRequest): boolean {
   }
 
   const token = authHeader.replace('Bearer ', '');
-  const expectedToken = process.env.SKILL_AUTH_TOKEN || 'claw0x_bridge_2026';
+  const expectedToken = process.env.SKILL_AUTH_TOKEN;
+  if (!expectedToken) {
+    console.error('SKILL_AUTH_TOKEN not configured');
+    return false;
+  }
   
   return token === expectedToken;
 }
