@@ -27,6 +27,7 @@ import selfImprovingAgent from '../skills/self-improving-agent/handler';
 import sentiment from '../skills/sentiment/handler';
 import skillScout from '../skills/skill-scout/handler';
 import tavilySearch from '../skills/tavily-search/handler';
+import securityScanner from '../skills/skill-security-scanner/handler';
 import validateEmail from '../skills/validate-email/handler';
 
 type Handler = (req: VercelRequest, res: VercelResponse) => Promise<void> | void;
@@ -43,6 +44,7 @@ const SKILL_MAP: Record<string, Handler> = {
   'sentiment': sentiment,
   'skill-scout': skillScout,
   'tavily-search': tavilySearch,
+  'security-scanner': securityScanner,
   'validate-email': validateEmail,
 };
 
