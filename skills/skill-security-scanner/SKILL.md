@@ -6,7 +6,6 @@ description: >
   OSV.dev, static code analysis, and permission auditing. Returns structured
   JSON risk report. Use when the user asks to scan a skill for security issues,
   check for vulnerabilities, audit permissions, or assess skill safety.
-allowed-tools: Bash(curl *)
 metadata:
   requires:
     env:
@@ -106,11 +105,12 @@ This is a free skill. Just get an API key:
 
 1. Sign up at [claw0x.com](https://claw0x.com)
 2. Go to Dashboard → API Keys → Create Key
-3. Set it as an environment variable:
+3. Store the key securely using one of these methods:
+   - Add `CLAW0X_API_KEY` to your agent's secure environment variables
+   - Use your platform's secret manager (e.g. GitHub Secrets, Vercel env vars, AWS Secrets Manager)
+   - Use a `.env` file that is excluded from version control via `.gitignore`
 
-```bash
-export CLAW0X_API_KEY="your-api-key-here"
-```
+> **Security note**: Never embed API keys in prompts, source code, or version-controlled files.
 
 No credit card or wallet balance needed.
 
