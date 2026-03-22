@@ -23,6 +23,19 @@ Teach your OpenClaw agent new abilities in plain English. No coding required.
 
 > **Free to use.** This skill costs nothing. [Sign up at claw0x.com](https://claw0x.com), create an API key, and start teaching your agent new tricks.
 
+## Quick Reference
+
+| When This Happens | Do This | What You Get |
+|-------------------|---------|--------------|
+| "I wish my agent could..." | Describe what you want | Complete skill file + setup guide |
+| Need Google Calendar integration | "Read my calendar events" | Calendar reader skill |
+| Want Slack notifications | "Send messages to Slack" | Slack messenger skill |
+| Have CSV data to analyze | "Analyze my sales data" | CSV analyzer skill |
+| Need custom API integration | "Connect to [service]" | API wrapper skill |
+| Want local file processing | "Parse my PDF invoices" | File processor skill |
+
+**Why OpenClaw-specific?** Generates skills in OpenClaw's native format, includes proper tool declarations, follows framework conventions.
+
 ---
 
 ## What This Does

@@ -26,6 +26,54 @@ Build production-ready AI agent skills for the Claw0x platform. From a one-sente
 
 > **Free to use.** This skill costs nothing. [Sign up at claw0x.com](https://claw0x.com), create an API key, and start calling. No credit card required.
 
+## Quick Reference
+
+| When This Happens | Use This Action | What You Get |
+|-------------------|-----------------|--------------|
+| "I have an idea for a skill" | `create` | Complete SKILL.md + handler skeleton |
+| "This skill doc needs work" | `improve` | Refined SKILL.md with before/after scores |
+| "Is this skill ready to deploy?" | `evaluate` | Quality scores across 4 dimensions |
+| "Agents aren't triggering my skill" | `optimize-description` | Rewritten description for better discovery |
+| "I need test cases" | `generate-tests` | Should-trigger and should-not-trigger prompts |
+
+---
+
+## 5-Minute Quickstart
+
+### Step 1: Get API Key (30 seconds)
+Sign up at [claw0x.com](https://claw0x.com) → Dashboard → Create API Key
+
+### Step 2: Create Your First Skill (2 minutes)
+```bash
+curl -X POST https://api.claw0x.com/v1/call \
+  -H "Authorization: Bearer ck_live_..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "skill": "skill-creator",
+    "input": {
+      "action": "create",
+      "intent": "I want a skill that validates email addresses"
+    }
+  }'
+```
+
+### Step 3: Get Complete SKILL.md + Handler (instant)
+```json
+{
+  "skill_md": "---\nname: email-validator\ndescription: Validate email addresses...",
+  "handler_skeleton": "import { VercelRequest, VercelResponse }...",
+  "evaluation": {
+    "completeness": 0.85,
+    "clarity": 0.9
+  }
+}
+```
+
+### Step 4: Deploy and Test
+Copy the generated files, deploy to Vercel, and you're live!
+
+**Done.** You just created a production-ready skill in 5 minutes.
+
 ## How Claw0x Skills Work — Architecture in 60 Seconds
 
 Every skill on Claw0x follows the same pattern:
