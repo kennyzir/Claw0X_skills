@@ -38,13 +38,11 @@ Many skills are **completely free** — just [sign up at claw0x.com](https://cla
 | PDF Parser | `/api/parse-pdf` | Extract text and metadata from PDF documents | $0.005/call | Production |
 | AI Humanizer | `/api/humanizer` | Remove AI writing patterns from text (24 pattern taxonomy) | Pay-per-call | Production |
 | Translation | `/api/translate` | Translate text between 6+ languages | **Free** | Demo |
-| AgentMail | `/api/agentmail` | API-first email platform for AI agents | $0.02/call | Production |
 | Capability Evolver | `/api/capability-evolver` | Meta-skill for agent self-improvement via EvoMap Hub | $0.03/call | Production |
 | Self-Improving Agent | `/api/self-improving-agent` | Capture learnings, errors, corrections for continuous improvement | **Free** | Production |
 | Skill Scout | `/api/skill-scout` | Discover and recommend skills across Claw0x and community sources | **Free** | Production |
 | Skills Archive | `/api/skills` | Browse and search the full Claw0x skill catalog | **Free** | Production |
 | Tavily Search | `/api/tavily-search` | LLM-optimized web search with AI answer summaries | Freemium | Production |
-| Code Generator | `/api/code-gen` | Generate deployable TypeScript skill handlers from descriptions | $0.01/call | Production |
 
 ## Free Skills
 

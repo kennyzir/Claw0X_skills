@@ -47,6 +47,10 @@ interface SearchResult {
   browse_url?: string;
 }
 
+function asArray(value: unknown): any[] {
+  return Array.isArray(value) ? value : [];
+}
+
 // ─── Live Catalog (fetched from API, cached 5 min) ──────────
 
 const CLAW0X_API = process.env.CLAW0X_API_BASE || 'https://claw0x.com';
@@ -67,7 +71,7 @@ async function fetchCatalog(): Promise<CatalogSkill[]> {
     });
     if (!res.ok) throw new Error(`API ${res.status}`);
 
-    const data: any[] = await res.json();
+    const data = asArray(await res.json());
 
     cachedCatalog = data.map(s => {
       const isCommunity = (s.slug || '').startsWith('community-');

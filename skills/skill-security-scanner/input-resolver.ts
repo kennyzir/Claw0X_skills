@@ -74,7 +74,7 @@ async function fetchSourceFilePaths(
     return []
   }
 
-  const data = await res.json()
+  const data: any = await res.json()
   const tree: Array<{ path: string; type: string; size?: number }> = data.tree || []
 
   // Filter to source files only, skip node_modules / dist / .git
@@ -184,7 +184,11 @@ async function resolveFromSlug(slug: string): Promise<ResolvedScanTargets> {
     throw err
   }
 
-  const repoUrl: string | undefined = skill.repo_url || skill.github_url
+  const repoUrl: string | undefined = typeof skill.repo_url === 'string'
+    ? skill.repo_url
+    : typeof skill.github_url === 'string'
+      ? skill.github_url
+      : undefined
   if (!repoUrl) {
     // Skill exists but has no repo — return empty scan targets
     return {

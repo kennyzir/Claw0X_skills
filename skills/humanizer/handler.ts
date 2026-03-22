@@ -74,7 +74,7 @@ async function humanizeWithLLM(text: string): Promise<{ humanized: string; metho
     throw new Error(`Gemini API ${res.status}: ${err}`);
   }
 
-  const data = await res.json();
+  const data: any = await res.json();
   const humanized = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
   if (!humanized) throw new Error('Empty response from LLM');
 

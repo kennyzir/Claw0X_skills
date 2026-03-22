@@ -15,6 +15,14 @@ export interface PackageQuery {
   ecosystem: string
 }
 
+function asRecord(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === 'object' ? (value as Record<string, unknown>) : null
+}
+
+function asArray(value: unknown): any[] {
+  return Array.isArray(value) ? value : []
+}
+
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || ''
 
 function githubHeaders(): Record<string, string> {
@@ -121,12 +129,12 @@ export async function queryOsv(packages: PackageQuery[]): Promise<OsvVulnerabili
     throw new Error(`OSV API error: ${res.status}`)
   }
 
-  const data = await res.json()
+  const data = asRecord(await res.json())
   const vulns: OsvVulnerability[] = []
   const seen = new Set<string>()
 
-  for (const result of data.results || []) {
-    for (const v of result.vulns || []) {
+  for (const result of asArray(data?.results)) {
+    for (const v of asArray(result?.vulns)) {
       if (!seen.has(v.id)) {
         seen.add(v.id)
         vulns.push({

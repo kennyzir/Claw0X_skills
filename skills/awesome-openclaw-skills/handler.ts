@@ -26,6 +26,10 @@ interface SkillEntry {
   success_rate: number | null;
 }
 
+function asArray(value: unknown): any[] {
+  return Array.isArray(value) ? value : [];
+}
+
 // ─── Live Data Fetcher with Cache ────────────────────────────
 
 const CLAW0X_API = process.env.CLAW0X_API_BASE || 'https://claw0x.com';
@@ -48,7 +52,7 @@ async function fetchSkills(): Promise<SkillEntry[]> {
 
     if (!res.ok) throw new Error(`API ${res.status}`);
 
-    const data: any[] = await res.json();
+    const data = asArray(await res.json());
 
     cachedSkills = data.map(s => ({
       name: s.name,

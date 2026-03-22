@@ -25,6 +25,7 @@ import parsePdf from '../skills/parse-pdf/handler';
 import scrape from '../skills/scrape/handler';
 import selfImprovingAgent from '../skills/self-improving-agent/handler';
 import sentiment from '../skills/sentiment/handler';
+import smartSummarizer from '../skills/smart-summarizer/handler';
 import skillScout from '../skills/skill-scout/handler';
 import tavilySearch from '../skills/tavily-search/handler';
 import securityScanner from '../skills/skill-security-scanner/handler';
@@ -43,6 +44,7 @@ const SKILL_MAP: Record<string, Handler> = {
   'scrape': scrape,
   'self-improving-agent': selfImprovingAgent,
   'sentiment': sentiment,
+  'smart-summarizer': smartSummarizer,
   'skill-scout': skillScout,
   'tavily-search': tavilySearch,
   'security-scanner': securityScanner,

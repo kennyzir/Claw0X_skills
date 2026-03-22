@@ -97,7 +97,7 @@ async function handler(req: VercelRequest, res: VercelResponse) {
       return errorResponse(res, `Gemini API error: ${geminiRes.status}`, 502, err);
     }
 
-    const data = await geminiRes.json();
+    const data: any = await geminiRes.json();
     let code = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     if (!code) {
