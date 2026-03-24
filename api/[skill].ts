@@ -18,6 +18,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 
 import agentmail from '../skills/agentmail/handler';
 import awesomeOpenclawSkills from '../skills/awesome-openclaw-skills/handler';
+import browserOperator from '../skills/browser-operator/handler';
 import capabilityEvolver from '../skills/capability-evolver/handler';
 import codeGen from '../skills/code-gen/handler';
 import humanizer from '../skills/humanizer/handler';
@@ -37,6 +38,7 @@ type Handler = (req: VercelRequest, res: VercelResponse) => Promise<void> | void
 const SKILL_MAP: Record<string, Handler> = {
   'agentmail': agentmail,
   'awesome-openclaw-skills': awesomeOpenclawSkills,
+  'browser-operator': browserOperator,
   'capability-evolver': capabilityEvolver,
   'code-gen': codeGen,
   'humanizer': humanizer,

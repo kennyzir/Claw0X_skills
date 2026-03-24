@@ -2,6 +2,9 @@ import { VercelRequest, VercelResponse } from '@vercel/node'
 import { authMiddleware } from '../../lib/auth'
 import { successResponse, errorResponse } from '../../lib/response'
 
+declare const document: any
+declare const window: any
+
 type Step =
   | { type: 'snapshot'; interactive_only?: boolean }
   | { type: 'click'; ref?: string; selector?: string }
@@ -58,8 +61,8 @@ async function captureSnapshot(page: any, interactiveOnly = true): Promise<Snaps
 
     let counter = 0
 
-    function visible(el: Element) {
-      const html = el as HTMLElement
+    function visible(el: any) {
+      const html = el
       const style = window.getComputedStyle(html)
       const rect = html.getBoundingClientRect()
       return style.visibility !== 'hidden'
@@ -69,13 +72,13 @@ async function captureSnapshot(page: any, interactiveOnly = true): Promise<Snaps
     }
 
     return candidates
-      .filter((el) => visible(el))
+      .filter((el: any) => visible(el))
       .slice(0, 200)
-      .map((el) => {
+      .map((el: any) => {
         counter += 1
         const ref = `e${counter}`
         el.setAttribute('data-claw-ref', ref)
-        const html = el as HTMLElement
+        const html = el
         const text = (html.innerText || html.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 160)
         return {
           ref,
@@ -168,9 +171,9 @@ async function executeStep(page: any, step: Step, index: number) {
         return { step: index + 1, type: step.type, mode, html: await locator.innerHTML() }
       }
       if (mode === 'links') {
-        const links = await page.$$eval(target, (els: Element[]) => els.map((el) => ({
+        const links = await page.$$eval(target, (els: any[]) => els.map((el: any) => ({
           text: (el.textContent || '').trim(),
-          href: (el as HTMLAnchorElement).getAttribute('href'),
+          href: el.getAttribute('href'),
         })))
         return { step: index + 1, type: step.type, mode, links }
       }
@@ -211,6 +214,23 @@ function extractInput(body: unknown): Record<string, unknown> {
   return requestBody
 }
 
+function resolveViewport(input: Record<string, unknown>) {
+  const candidate = input.viewport
+  if (
+    candidate
+    && typeof candidate === 'object'
+    && typeof (candidate as Record<string, unknown>).width === 'number'
+    && typeof (candidate as Record<string, unknown>).height === 'number'
+  ) {
+    return {
+      width: (candidate as Record<string, number>).width,
+      height: (candidate as Record<string, number>).height,
+    }
+  }
+
+  return { width: 1440, height: 900 }
+}
+
 async function handler(req: VercelRequest, res: VercelResponse) {
   const input = extractInput(req.body)
   const url = input.url
@@ -232,7 +252,7 @@ async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const context = await browser.newContext({
-      viewport: input.viewport || { width: 1440, height: 900 },
+      viewport: resolveViewport(input),
       userAgent: typeof input.user_agent === 'string' ? input.user_agent : undefined,
     })
     const page = await context.newPage()
@@ -286,6 +306,7 @@ async function handler(req: VercelRequest, res: VercelResponse) {
 
 export const __testables = {
   extractInput,
+  resolveViewport,
   resolveTarget,
 }
 
