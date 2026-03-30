@@ -33,6 +33,14 @@ import tavilySearch from '../skills/tavily-search/handler';
 import securityScanner from '../skills/skill-security-scanner/handler';
 import skillCreator from '../skills/skill-creator/handler';
 import validateEmail from '../skills/validate-email/handler';
+import ocrImageToText from '../skills/ocr-image-to-text/handler';
+import entityExtractor from '../skills/entity-extractor/handler';
+import phoneValidator from '../skills/phone-validator/handler';
+import urlMetadata from '../skills/url-metadata/handler';
+import htmlToMarkdown from '../skills/html-to-markdown/handler';
+import textClassifier from '../skills/text-classifier/handler';
+import keywordExtractor from '../skills/keyword-extractor/handler';
+import ipGeolocation from '../skills/ip-geolocation/handler';
 
 type Handler = (req: VercelRequest, res: VercelResponse) => Promise<void> | void;
 
@@ -54,6 +62,14 @@ const SKILL_MAP: Record<string, Handler> = {
   'security-scanner': securityScanner,
   'skill-creator': skillCreator,
   'validate-email': validateEmail,
+  'ocr-image-to-text': ocrImageToText,
+  'entity-extractor': entityExtractor,
+  'phone-validator': phoneValidator,
+  'url-metadata': urlMetadata,
+  'html-to-markdown': htmlToMarkdown,
+  'text-classifier': textClassifier,
+  'keyword-extractor': keywordExtractor,
+  'ip-geolocation': ipGeolocation,
 };
 
 export default async function router(req: VercelRequest, res: VercelResponse) {
