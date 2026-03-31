@@ -41,6 +41,16 @@ import htmlToMarkdown from '../skills/html-to-markdown/handler';
 import textClassifier from '../skills/text-classifier/handler';
 import keywordExtractor from '../skills/keyword-extractor/handler';
 import ipGeolocation from '../skills/ip-geolocation/handler';
+import jsonSchemaValidator from '../skills/json-schema-validator/handler';
+import regexMatch from '../skills/regex-match/handler';
+import readabilityExtractor from '../skills/readability-extractor/handler';
+import whoisDnsLookup from '../skills/whois-dns-lookup/handler';
+import csvExcelTransformer from '../skills/csv-excel-transformer/handler';
+import qrCodeGenerator from '../skills/qr-code-generator/handler';
+import newsAggregator from '../skills/news-aggregator/handler';
+import googleSearchScraper from '../skills/google-search-scraper/handler';
+import screenshotApi from '../skills/screenshot-api/handler';
+import batchEmailSender from '../skills/batch-email-sender/handler';
 
 type Handler = (req: VercelRequest, res: VercelResponse) => Promise<void> | void;
 
@@ -70,6 +80,16 @@ const SKILL_MAP: Record<string, Handler> = {
   'text-classifier': textClassifier,
   'keyword-extractor': keywordExtractor,
   'ip-geolocation': ipGeolocation,
+  'json-schema-validator': jsonSchemaValidator,
+  'regex-match': regexMatch,
+  'readability-extractor': readabilityExtractor,
+  'whois-dns-lookup': whoisDnsLookup,
+  'csv-excel-transformer': csvExcelTransformer,
+  'qr-code-generator': qrCodeGenerator,
+  'news-aggregator': newsAggregator,
+  'google-search-scraper': googleSearchScraper,
+  'screenshot-api': screenshotApi,
+  'batch-email-sender': batchEmailSender,
 };
 
 export default async function router(req: VercelRequest, res: VercelResponse) {
