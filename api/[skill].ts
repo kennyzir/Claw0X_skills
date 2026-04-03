@@ -51,6 +51,10 @@ import newsAggregator from '../skills/news-aggregator/handler';
 import googleSearchScraper from '../skills/google-search-scraper/handler';
 import screenshotApi from '../skills/screenshot-api/handler';
 import batchEmailSender from '../skills/batch-email-sender/handler';
+import seoAudit from '../skills/seo-audit/handler';
+import exaSearch from '../skills/exa-search/handler';
+import openclawSkillCreator from '../skills/openclaw-skill-creator/handler';
+import translate from '../skills/translate/handler';
 
 type Handler = (req: VercelRequest, res: VercelResponse) => Promise<void> | void;
 
@@ -90,6 +94,10 @@ const SKILL_MAP: Record<string, Handler> = {
   'google-search-scraper': googleSearchScraper,
   'screenshot-api': screenshotApi,
   'batch-email-sender': batchEmailSender,
+  'seo-audit': seoAudit,
+  'exa-search': exaSearch,
+  'openclaw-skill-creator': openclawSkillCreator,
+  'translate': translate,
 };
 
 export default async function router(req: VercelRequest, res: VercelResponse) {
